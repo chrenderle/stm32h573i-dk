@@ -153,6 +153,9 @@ async fn display_task(mut arguments: DisplayTaskArguments<'static>) -> ! {
     
     // enable chip select
     arguments.lcd_cs.set_low();
+
+    // enable backlight
+    arguments.backlight.set_high();
     
     Timer::after_millis(50).await;
 
@@ -164,9 +167,6 @@ async fn display_task(mut arguments: DisplayTaskArguments<'static>) -> ! {
         .color_order(mipidsi::options::ColorOrder::Rgb)
         .reset_pin(arguments.lcd_rst)
         .init(&mut delay).unwrap();
-    
-    // enable backlight
-    arguments.backlight.set_high();
     
     display.clear(Rgb565::RED).unwrap();
     info!("drew display");
